@@ -32,7 +32,9 @@ This repository will contain all of the work, code, and insights I gain as I go 
 
 ![Generative AI Section Banner](./media-assets/generative_ai_section_banner.png)
 
-[My Proposal](https://www.hackster.io/contests/amd2023/hardware_applications/16336) for the contest was to set up a local Kubernetes cluster, and set up K8sGPT to use LocalAI instead of a cloud-based LLM, powered by AMD AI hardware.
+![K8sGPT](./media-assets/k8sgpt.png)
+
+[My Proposal](https://www.hackster.io/contests/amd2023/hardware_applications/16336) for the contest was to set up a local Kubernetes cluster, and set up [K8sGPT](https://k8sgpt.ai/) to use [LocalAI](https://localai.io/) instead of a cloud-based LLM, powered by AMD AI hardware.
 
 I submitted my proposal for **Category 1: Generative AI with AMD GPUs** in November 2023.
 
