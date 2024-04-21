@@ -6,9 +6,13 @@
 
 1. [Introduction](#introduction)
 2. [The Proposal](#the-proposal)
-3. [Journals](#journals)
-4. [AMD Accelerator Cloud](#amd-accelerator-cloud)
-5. [Resources](#resources)
+3. [Rules and Judging](#rules-and-judging)
+    1. [Hardware/Software Build Requirements](#hardware-software-build-requirements)
+    2. [Project Documentation Requirements](#project-documentation-requirements)
+    3. [Judging Criteria](#judging-criteria)
+4. [Journals](#journals)
+5. [AMD Accelerator Cloud](#amd-accelerator-cloud)
+6. [Resources](#resources)
 
 ## Introduction
 
@@ -34,9 +38,51 @@ I submitted my proposal for **Category 1: Generative AI with AMD GPUs** in Novem
 
 My hope is that as I get things working, I'm able to contribute back to some of these projects, and test some additional functionality than what is currently built in. I will document all progress in my [journals](./journals/), and the relative section README files.
 
+## Rules and Judging
+
+The [contest website rules](https://www.hackster.io/contests/amd2023/rules#challengeNav) has a number of requirements to provide for the judging section.  To ensure I have fulfilled these requirements, I am adding these sections.
+
+### Hardware/Software Build Requirements
+
+**Project Category:** Generative AI - Cloud
+* For this category, we want to see developers create unique applications that solve real-world problems utilizing the ROCm software combined with either an AMD Instinct™ MI210 accelerator card via cloud access or an AMD Radeon™ PRO W7900 graphics card.
+
+**Project AMD Hardware:**
+
+* Use AMD Instinct MI210 Accelerator via Cloud Access or AMD Radeon PRO W7900 GPU
+* Use AMD ROCm Software 
+
+**Problem To Solve:**
+* ML Ops Developers: end-to-end generative AI workflows: fine-tuning on pre-trained models, vector databases, agents, retrieval augmented generation (RAG)
+* Instead of using OpenAI or cloud based LLM, configure K8sGPT to use a self-contained, locally hosted AI.
+* Configure [LocalAI](https://localai.io/) and [K8sGPT](https://k8sgpt.ai/) to diagnose local Kubernetes cluster issues, leveraging AMD GPU hardware, and ROCm software.
+* Contribute to the projects, adding additional analyzers and/or integrations.
+
+### Project Documentation Requirements
+
+Your project must include a project name, short project description, cover image, bill of materials (BOM), full instructions, images, and relevant resource files (schematics CAD, commented code, reference models, etc.).
+Your project must be written in English.
+Your project must be submitted by June 30th, 2024.
+
+### Judging Criteria
+
+Your project will be judged according to the rubric below.
+
+**Project Documentation (30 points)**
+* Story/Instructions - Show how you created your project, including images, screenshots, and/or a video demonstration of your solution working as intended. Ask yourself: “If I were a beginner reading this project, would I understand how to recreate it?”
+
+**Complete BOM (10 points)**
+* Detail the hardware, software and/or tools used.
+
+**Code & Contribution (30 points)**
+* Include working code with helpful comments.
+
+**Creativity (30 points)**
+* Your idea doesn’t have to be original, but it should be creative (a fresh take on an old idea is often worth as much as a brand new idea)
+
 ## Journals
 
-All of the weekly journals documenting my progress can be found [here](./journals/).
+All of the weekly journals documenting my project progress can be found [here](./journals/).
 
 ## AMD Accelerator Cloud
 

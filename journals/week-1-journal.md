@@ -10,6 +10,7 @@ April 19, 2024:
 * Troubleshooting build performance due to limited CPU core usage.
 * Tested Mixtral-Instruct for LocalAI LLM.
 * Started Documentation
+* See amd-accelerator-cloud [README.md](../amd-accelerator-cloud/README.md) for more details.
 * Time Spent: 8 hours.
 
 April 20, 2024:

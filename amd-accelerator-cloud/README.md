@@ -10,8 +10,9 @@
 5. [Adding Models](#adding-models)
 6. [Testing Queries](#testing-queries)
 7. [SSH Tunneling](#ssh-tunneling)
-8. [Next Steps](#next-steps)
-8. [Resources](#resources)
+8. [Troubleshooting](#troubleshooting)
+9. [Next Steps](#next-steps)
+10. [Resources](#resources)
 
 ## Introduction
 My [project proposal](https://www.hackster.io/contests/amd2023/hardware_applications/16336) was to use a Local LLM powered by a Radeon Pro W7900 to interact with Kubernetes via K8sGPT. 
@@ -159,6 +160,51 @@ ssh aac@aac1.amd.com -p 7010 -L 8080:127.0.0.1:8080
 ```
 
 This allowed me to send the requests to the running LocalAI program on localhost:8000 on my own machine to the running workload on AMD Accelerator Cloud.
+
+## Troubleshooting
+
+Initially, building from source would fail due to missing prerequisites, as some of the package names needed to build from source were only documented for Arch Linux.  I was able to use the error messages to figure out what was missing, and found ways to include them in the OS prior to building.  
+
+I found the [LocalAI Github Issues](https://github.com/mudler/LocalAI/issues) section very helpful for troubleshooting, as many of the error messages I found could be searched there and some steps provided to fix.
+
+For example, I ran into this error:
+
+```
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- x86 detected
+CMake Error at examples/grpc-server/CMakeLists.txt:26 (find_package):
+  Could not find a package configuration file provided by "Protobuf" with any
+  of the following names:
+
+    ProtobufConfig.cmake
+    protobuf-config.cmake
+
+  Add the installation prefix of "Protobuf" to CMAKE_PREFIX_PATH or set
+  "Protobuf_DIR" to a directory containing one of the above files.  If
+  "Protobuf" provides a separate development package or SDK, be sure it has
+  been installed.
+```
+
+This was due to missing `libabsl-dev`, and [this issue](https://github.com/mudler/LocalAI/issues/1386) had a lot of good troubleshooting steps to try.
+
+Building gRPC from source was probably the hardest, and took the longest, as it switched to using cmake.  
+The `BUILD_GRPC_FOR_BACKEND_LLAMA=ON` flag was needed, but [the documentation](https://localai.io/basics/build/) stated to use `true`, which failed.  I will look at getting this fixed.
+
+Also had trouble with this error:
+
+![aac-troubleshooting-grpc-build](../media-assets/aac-troubleshooting-grpc-build.png)
+
+This was caused by a partial build directory being maintained between launching workloads, or failed builds.  
+Initially I added a `make clean` step before building, but ended up checking and removing the LocalAI folder if it persisted from a previous workload, to avoid problems.
+
+Once I did get everything to build successfully, it took an extremely long time, and I noticed that only one CPU core was typically being used, and a lot of the time it was sitting idle:
+
+![aac-no-cpu-usage](../media-assets/aac-no-cpu-usage.png)
+
+It probably took an hour to build the first time it got into building gRPC, before failing.  I did some research, and added the `-j16` to the build command, which got the first part of the build using all 16 cores allocated to the container, but the gRPC build was still slow.  I eventually was able to add an explicit `export CMAKE_BUILD_PARALLEL_LEVEL=16` command, based on [this article](https://cmake.org/cmake/help/latest/envvar/CMAKE_BUILD_PARALLEL_LEVEL.html) to ensure the setting would be used by the called build.  Once this was done, I could see all 16 cores used during the gRPC build:
+
+![aac-full-cpu1](../media-assets/aac-full-cpu1.png)
+![aac-full-cpu2](../media-assets/aac-full-cpu2.png)
 
 ## Next Steps
 
