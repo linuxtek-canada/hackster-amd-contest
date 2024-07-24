@@ -1,0 +1,17 @@
+From Hackster Contest:
+1. Create New Project
+2. Give title, elevator pitch, cover image.  Title project lives as web page.
+3. Can use URL grabber if documented on Github to document next page.  Recommend don't use - formatting errors.
+4. Team, Things, Story, Atachments, Go To Project - build each section.
+5. Work Attribution - Mention other resources 
+6. Hardware Components - add the AMD component.
+7. Add hardware/software 
+8. The story:  Bulk of Project - Easy to Read for Judges.
+    example:  predictive maintenance of roads using an iot vehicle counter
+    example: adaptive computing challenge winner - see how it was designed
+    Headers become part of TOC
+    
+9. Contest Judging Criteria - Project Documentation, BOM, COde and Contibution, Creativity
+
+If Project Submission shows "Review and Submit Project" it hasn't submitted yet.  Make sure you have the green Submitted button.
+Can edit up to submission deadline.
