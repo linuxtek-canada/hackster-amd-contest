@@ -43,6 +43,13 @@ April 23, 2024:
 April 24, 2024:
 * Troubleshooting issues loading LLM to test.
 * Determined problem was due to the AMD GPU and CPU both showing up as valid devices for offloading. 
-* Tested excluding CPU by specifying /dev/dri/renderD128, and also setting `HIP_VISIBLE_DEVICES=0`.
+* Tested excluding CPU by specifying the GPU device /dev/dri/renderD128, and also setting `HIP_VISIBLE_DEVICES=0`.
 * Set up cached directory for storing model downloads (excluded from Github).
 * Successfully ran LocalAI AIO tests on AMD RX 7900XT GPU.
+
+April 27, 2024:
+* Troubleshooting 
+
+April 28, 2024:
+* Forked LocalAI and looked at fixing an incorrect version causing a documentation issue that was raised in [this issue](https://github.com/mudler/LocalAI/issues/2162).
+* Confirmed issue is corrected, website is updated.  Closed the issue on the LocalAI repo.

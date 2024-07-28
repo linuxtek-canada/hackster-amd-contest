@@ -1,23 +1,27 @@
-version: '3.8'
-
 services: 
   localai:       
-    image: localai/localai:latest-aio-gpu-hipblas
+    image: localai/localai:latest-aio-gpu-hipblas    
     deploy:
       resources:
         limits:
           cpus: 8.0
           memory: 32G        
     environment:      
-      - DEBUG=true    
+      - LOCALAI_LOG_LEVEL=debug  
       # - REBUILD=true
       - BUILD_TYPE=hipblas
       # - BUILD_GRPC_FOR_BACKEND_LLAMA=ON      
       - GPU_TARGETS=gfx1100
       # - HSA_OVERRIDE_GFX_VERSION=10.3.0
+      - HSA_OVERRIDE_GFX_VERSION=11.0.0
       - CMAKE_BUILD_PARALLEL_LEVEL=8
       - MAKEFLAGS=-j8 -Otarget
       - HIP_VISIBLE_DEVICES=0 
+      - OPENAI_API_KEY=abc123
+      - OPENAI_API_BASE=http://localhost:8080
+      #- LOCALAI_DISABLE_WELCOME=true
+      #- DISABLE_WELCOME=true
+      #- LOCALAI_DISABLE_WEBUI=true
     ports:
       - "8080:8080"
     volumes:
@@ -27,13 +31,32 @@ services:
       - /dev/dri
       - /dev/kfd
     security_opt:
-      - seccomp:unconfined
+      - seccomp:unconfined   
 
-  # k8sgpt:
-  #   image: ghcr.io/k8sgpt-ai/k8sgpt:latest
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: 4.0
-  #         memory: 8G        
-  #   command: ["bash -c", "k8sgpt auth default -p localai "]
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    deploy:
+      resources:
+        limits:
+          cpus: 2.0
+          memory: 8G
+    environment:
+      - WEBUI_NAME=LocalAI OpenUI
+      - WEBUI_AUTH=false
+      - OPENAI_API_KEY=abc123
+      - OPENAI_API_BASE_URL=http://localai:8080
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./open-webui:/app/backend/data
+    restart: always
+
+  k8sgpt:
+    image: ghcr.io/k8sgpt-ai/k8sgpt:latest
+    deploy:
+      resources:
+        limits:
+          cpus: 4.0
+          memory: 8G        
+    command: ["bash -c", "k8sgpt auth default -p localai"]

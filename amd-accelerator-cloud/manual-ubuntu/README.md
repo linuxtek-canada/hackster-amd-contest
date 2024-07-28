@@ -30,7 +30,7 @@ This section will be used for documenting the setup and configuration of a [Loca
 ### AMD Accelerator Cloud Limitations
 With the access we were provided, we were only able to create workloads for PyTorch, Tensorflow, or interact with an Ubuntu Docker container:
 
-![aac-workloads](../media-assets/aac-workloads.png)
+![aac-workloads](../../media-assets/aac-workloads.png)
 
 These workloads had a lifespan limit of 4 hours, and currently access to only one GPU.
 
@@ -62,26 +62,26 @@ I followed [these steps](https://github.com/amddcgpuce/AMDAcceleratorCloudGuides
 
 You can select input files, but I preferred to pull down my files from Github.  The home directory files will persist between workloads, so if you have some model or training data, that can be reused.
 
-![aac-fileupload](../media-assets/aac-fileupload.png)
+![aac-fileupload](../../media-assets/aac-fileupload.png)
 
 After selecting files, you can tune the resources parameters.  By default the workload will run for 1 hour, and we can increase this to 4 hours.
 Although it looks like we can allocate multiple GPUs, we were asked to only use one, to ensure there would be enough resources for everyone.
 
-![aac-resources](../media-assets/aac-resources.png)
+![aac-resources](../../media-assets/aac-resources.png)
 
 Next, we were able to select the queue and cluster to run on.  We had access to the **AAC Plano AIG** cluster, which had 128 CPU cores.  For our container, we could specify up to 16 cores to use, and up to 64GB RAM.
 
-![aac-queue](../media-assets/aac-queue.png)
+![aac-queue](../../media-assets/aac-queue.png)
 
 After reviewing the configuration, we were able to run the workload.  It took a few seconds to prepare, send to the cluster, and start up.  If there were more jobs waiting in the queue, it might take longer to run.
 
 By going to the [Workloads tab](https://aac.amd.com/jobs/all) at the top of thepage, we could see all of the currently running, and previous workloads.  Once the workload was running, clicking on it provided the network information to connect via SSH on a specific port:
 
-![aac-workload-network](../media-assets/aac-workload-network.png)
+![aac-workload-network](../../media-assets/aac-workload-network.png)
 
 For connecting via SSH, we were not able to import a public key, but were provided a randomly generated password, available under **Interactive Endpoints** on the right side of the window:
 
-![aac-wl-password](../media-assets/aac-wl-password.png)
+![aac-wl-password](../../media-assets/aac-wl-password.png)
 
 From our own computer, we could SSH into the Ubuntu instance using:
 
@@ -122,7 +122,7 @@ To run LocalAI and use this model, I ran the following from the OpenAI directory
 
 The model was automatically downloaded to the **models** directory, and took up about 15GB of space:
 
-![aac-model-size](../media-assets/aac-model-size.png)
+![aac-model-size](../../media-assets/aac-model-size.png)
 
 ## Testing Queries
 Once OpenAI was running and the Mixtral LLM enabled, You could see the endpoint for LocalAI was listening on `http://0.0.0.0:8080`.
@@ -137,17 +137,17 @@ curl http://localhost:8080/v1/completions \
 
 Once this was passed to LocalAI, the LLM was loaded into memory, which took a few minutes the first time. I could see in the debug data, that the LLM was successfully offloaded to the GPU:
 
-![aac-llm-gpu-offload](../media-assets/aac-llm-gpu-offload.png)
+![aac-llm-gpu-offload](../../media-assets/aac-llm-gpu-offload.png)
 
 After a few minutes, I was able to receive the response from the LLM.  The debug window showed a successful POST HTTP 200 for the request, and the response was returned in my SSH window:
 
-![aac-llm-repsonse](../media-assets/aac-llm-response.png)
+![aac-llm-repsonse](../../media-assets/aac-llm-response.png)
 
 From reviewing the workload details, we can see the real-time analytics, and see the spike in GPU processing and memory usage during the query being processed, while the CPU stays flat.  
 
 This confirms the LLM processing is being offloaded to the GPU:
 
-![aac-resources-usage](../media-assets/aac-resource-usage.png)
+![aac-resources-usage](../../media-assets/aac-resource-usage.png)
 
 ## SSH Tunnelling
 
@@ -192,19 +192,19 @@ The `BUILD_GRPC_FOR_BACKEND_LLAMA=ON` flag was needed, but [the documentation](h
 
 Also had trouble with this error:
 
-![aac-troubleshooting-grpc-build](../media-assets/aac-troubleshooting-grpc-build.png)
+![aac-troubleshooting-grpc-build](../../media-assets/aac-troubleshooting-grpc-build.png)
 
 This was caused by a partial build directory being maintained between launching workloads, or failed builds.  
 Initially I added a `make clean` step before building, but ended up checking and removing the LocalAI folder if it persisted from a previous workload, to avoid problems.
 
 Once I did get everything to build successfully, it took an extremely long time, and I noticed that only one CPU core was typically being used, and a lot of the time it was sitting idle:
 
-![aac-no-cpu-usage](../media-assets/aac-no-cpu-usage.png)
+![aac-no-cpu-usage](../../media-assets/aac-no-cpu-usage.png)
 
 It probably took an hour to build the first time it got into building gRPC, before failing.  I did some research, and added the `-j16` to the build command, which got the first part of the build using all 16 cores allocated to the container, but the gRPC build was still slow.  I eventually was able to add an explicit `export CMAKE_BUILD_PARALLEL_LEVEL=16` command, based on [this article](https://cmake.org/cmake/help/latest/envvar/CMAKE_BUILD_PARALLEL_LEVEL.html) to ensure the setting would be used by the called build.  Once this was done, I could see all 16 cores used during the gRPC build:
 
-![aac-full-cpu1](../media-assets/aac-full-cpu1.png)
-![aac-full-cpu2](../media-assets/aac-full-cpu2.png)
+![aac-full-cpu1](../../media-assets/aac-full-cpu1.png)
+![aac-full-cpu2](../../media-assets/aac-full-cpu2.png)
 
 ## Next Steps
 
