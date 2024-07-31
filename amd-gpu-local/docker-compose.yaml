@@ -51,12 +51,3 @@ services:
     volumes:
       - ./open-webui:/app/backend/data
     restart: always
-
-  k8sgpt:
-    image: ghcr.io/k8sgpt-ai/k8sgpt:latest
-    deploy:
-      resources:
-        limits:
-          cpus: 4.0
-          memory: 8G        
-    command: ["bash -c", "k8sgpt auth default -p localai"]

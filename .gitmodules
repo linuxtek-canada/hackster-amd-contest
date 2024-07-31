@@ -1,0 +1,3 @@
+[submodule "kubernetes-troubleshooting/kubernetes-troubleshooting-zero-to-hero"]
+	path = kubernetes-troubleshooting/kubernetes-troubleshooting-zero-to-hero
+	url = https://github.com/iam-veeramalla/kubernetes-troubleshooting-zero-to-hero.git

@@ -29,3 +29,17 @@ ssh -L [LOCAL_IP:]LOCAL_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER
 
 ssh aac@aac1.amd.com -p 7010 -L 8080:127.0.0.1:8080
 ```
+
+## Concerns
+
+Currently there is no way on the web interfact to specify parameters to load into your Docker container when launching the workload.
+
+For example, when launching LocalAI, I would need to specify environment variables to set `GPU_TARGETS=gfx90a` value to match the AMD Instinct MI210 card.
+
+Although the image does launch, and I can SSH into the container, the LocalAI executable does not run, and I am not able to query the API endpoint locally.
+
+This would require more testing and troubleshooting, however this is complicated by additional issues:
+
+* IP access issues, where my ISP IP is being blocked.  I am able to SSH into the container when using a VPN, but not directly.
+
+* The AAC Plano AIG cluster is currently queueing all workloads, and they are stuck on Pending, and unable to run.  I don't have access to see the queue length, to know when my workloads will run.
