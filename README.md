@@ -62,9 +62,12 @@ The [contest website rules](https://www.hackster.io/contests/amd2023/rules#chall
 
 ### Project Documentation Requirements
 
+```
 Your project must include a project name, short project description, cover image, bill of materials (BOM), full instructions, images, and relevant resource files (schematics CAD, commented code, reference models, etc.).
 Your project must be written in English.
-Your project must be submitted by June 30th, 2024.
+Your project must be submitted by July 31th, 2024.
+```
+The contest submission was made in [this Hackster post](https://www.hackster.io/jason-paul/local-kubernetes-cluster-troubleshooting-assistant-4f7952)
 
 ### Judging Criteria
 
@@ -90,11 +93,32 @@ All of the weekly journals documenting my project progress can be found [here](.
 
 Currently I am testing running LocalAI on the [AMD Accelerator Cloud](https://aac.amd.com/), using the [AMD Instinct MI210 Accelerators](https://www.amd.com/en/products/accelerators/instinct/mi200/mi210.html).
 
-I've documented the process for getting LocalAI set up and running as a workloud in [this README](./amd-accelerator-cloud/README.md).
+I've documented the process for getting LocalAI set up and running as a workload in [this README](./amd-accelerator-cloud/manual-ubuntu/README.md).
+
+## Locally Hosted LLM
+
+![localai-logo](./media-assets/localai-logo.png)
+
+I've also tested and set up a local copy of LocalAI using my personal GPU, as well as a web interface using [Open WebUI](https://docs.openwebui.com/). I've built a Docker Compose YAML file, and explained the configuration changes that may be needed for another environment in [this README](./amd-gpu-local/README.md).
+
+## K8sGPT Setup
+
+![k8sgpt-logo](./media-assets/k8sgpt.png)
+
+K8sGPT is a command-line utility that can be installed on your local machine regardless of the operating system, or as a Docker container. It will integrate with your Kubernetes configuration, as well as LocalAI, in order to scan your Kubernetes clusters for issues, and diagnose and triage issues in simple English. It has SRE experience codified into its analyzers and helps to pull out the most relevant information to enrich it with AI.
+
+I've included steps to install K8sGPT and integrate it with Kubernetes and OpenAI in [this README](./k8sgpt/README.md).
+
+## Kubernetes Troubleshooting
+
+To test using K8sGPT, I used some example scenarios from [Abhishek Veeramalla's](https://github.com/iam-veeramalla) Kubernetes From Zero to Hero YouTube series, specifically on Kubernetes Troubleshooting. You can watch the first video at [this link](https://youtu.be/vGab4v3RWEw). I included the Github repository as a submodule of my project, so it can be used to test with.
+
+Details on my troubleshooting examples and steps can be found in [this README](./kubernetes-troubleshooting/README.md).
 
 ## Resources
 * [Hackster Contest - Pervasive AI Developer Contest ](https://www.hackster.io/contests/amd2023#challengeNav)
 * [Hackster Contest Submission - Local Kubernetes Cluster Troubleshooting Assistant](https://www.hackster.io/contests/amd2023/hardware_applications/16336)
+* [LinuxTek Canada Website](https://www.linuxtek.ca/)
 * [Kubernetes Website](https://kubernetes.io/)
 * [K8sGPT Website](https://k8sgpt.ai/)
 * [LocalAI Website](https://localai.io/)
